@@ -163,6 +163,7 @@
 				!req.body.WERKS_AFD_BLOCK_CODE ||
 				!req.body.START_VALID ||
 				!req.body.END_VALID ||
+				!req.body.DELETE_TIME ||
 				!req.body.TOPOGRAPHY
 			) {
 				return res.send({
@@ -179,7 +180,6 @@
 
 				// Kondisi belum ada data, create baru dan insert ke Sync List
 				if( !data ) {
-					
 					const set = new BlockModel( {
 						NATIONAL: req.body.NATIONAL || "",
 						REGION_CODE: req.body.REGION_CODE || "",
@@ -197,7 +197,7 @@
 						START_VALID: HelperLib.date_format( req.body.START_VALID, 'YYYYMMDD' ),
 						END_VALID: HelperLib.date_format( req.body.END_VALID, 'YYYYMMDD' ),
 						INSERT_TIME: HelperLib.date_format( 'now', 'YYYYMMDDhhmmss' ),
-						DELETE_TIME: null,
+						DELETE_TIME: HelperLib.date_format( req.body.DELETE_TIME, 'YYYYMMDDhhmmss' ),
 						UPDATE_TIME: null,
 						TOPOGRAPHY: req.body.TOPOGRAPHY
 					} );
@@ -250,6 +250,7 @@
 								LONGITUDE_BLOCK: req.body.LONGITUDE_BLOCK || "",
 								END_VALID: HelperLib.date_format( req.body.END_VALID, 'YYYYMMDD' ),
 								UPDATE_TIME: HelperLib.date_format( 'now', 'YYYYMMDDhhmmss' ),
+								DELETE_TIME: HelperLib.date_format( req.body.DELETE_TIME, 'YYYYMMDDhhmmss' ),
 								TOPOGRAPHY: req.body.TOPOGRAPHY
 							}
 						}
@@ -267,7 +268,7 @@
 								LATITUDE_BLOCK: req.body.LATITUDE_BLOCK || "",
 								LONGITUDE_BLOCK: req.body.LONGITUDE_BLOCK || "",
 								END_VALID: HelperLib.date_format( req.body.END_VALID, 'YYYYMMDD' ),
-								DELETE_TIME: HelperLib.date_format( 'now', 'YYYYMMDDhhmmss' ),
+								DELETE_TIME: HelperLib.date_format( req.body.DELETE_TIME, 'YYYYMMDDhhmmss' ),
 								TOPOGRAPHY: req.body.TOPOGRAPHY
 							}
 						}
@@ -542,9 +543,6 @@
 			var ref_role = auth.REFFERENCE_ROLE;
 			var location_code_final = [];
 			var key = [];
-			var query = {};
-				query["END_VALID"] = 99991231;
-			
 			if ( ref_role != 'ALL' ) {
 				location_code_group.forEach( function( data ) {
 					console.log( "DATA: ", data );

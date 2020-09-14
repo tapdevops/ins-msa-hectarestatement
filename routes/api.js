@@ -8,6 +8,9 @@ const RoutesVersioning = require('express-routes-versioning')();
 const cors = require('cors')
 // Controllers
 const Controllers = {
+	v_2_2: {
+		Block: require(_directory_base + '/app/v2.2/Http/Controllers/BlockController.js'),
+	},
 	v_2_1: {
 		Block: require(_directory_base + '/app/v2.1/Http/Controllers/BlockController.js'),
 	},
@@ -99,6 +102,17 @@ module.exports = (app) => {
 			}
 		})
 	});
+	/*
+	 |--------------------------------------------------------------------------
+	 | API Versi 2.1
+	 |--------------------------------------------------------------------------
+	 */
+	//tambahan 2 field REF_BLOCK_NAME REF_BLOCK_INDUK_CODE ketika sync data block dari ldap ke mongodb
+	app.post('/api/v2.2/sync-tap/block', Middleware.v_1_0.VerifyToken, Controllers.v_2_2.Block.createOrUpdate);
+	//tambahan 2 field REF_BLOCK_NAME REF_BLOCK_INDUK_CODE
+	app.get('/api/v2.2/sync-mobile/block/:start_date/:end_date', Middleware.v_1_0.VerifyToken, Controllers.v_2_2.Block.sync_mobile);
+	//tambahan 2 field REF_BLOCK_NAME REF_BLOCK_INDUK_CODE
+	app.get('/api/v2.2/block', Middleware.v_1_0.VerifyToken, Controllers.v_2_2.Block.find);
 	/*
 	 |--------------------------------------------------------------------------
 	 | API Versi 2.1
