@@ -10,6 +10,7 @@ const cors = require('cors')
 const Controllers = {
 	v_2_2: {
 		Block: require(_directory_base + '/app/v2.2/Http/Controllers/BlockController.js'),
+		Tph: require(_directory_base + '/app/v2.2/Http/Controllers/TphController.js')
 	},
 	v_2_1: {
 		Block: require(_directory_base + '/app/v2.1/Http/Controllers/BlockController.js'),
@@ -65,7 +66,7 @@ const Middleware = {
 }
 var corsOptions = {
 	origin: function (origin, callback) {
-		callback(null, true)	
+		callback(null, true)
 	}
 }
 
@@ -73,9 +74,9 @@ var corsOptions = {
 var corsOptions = {
 	origin: function (origin, callback) {
 		if (whitelist.indexOf(origin) !== -1) {
-		callback(null, true)
+			callback(null, true)
 		} else {
-		callback(new Error('Not allowed by CORS'))
+			callback(new Error('Not allowed by CORS'))
 		}
 	}
 }
@@ -102,6 +103,14 @@ module.exports = (app) => {
 			}
 		})
 	});
+
+	/*
+ |--------------------------------------------------------------------------
+ | API Versi 2.2
+ |--------------------------------------------------------------------------
+ */
+	// register TPH
+	app.post('/api/v2.2/tph', Middleware.v_2_0.VerifyToken, Controllers.v_2_2.Tph.create)
 	/*
 	 |--------------------------------------------------------------------------
 	 | API Versi 2.1
