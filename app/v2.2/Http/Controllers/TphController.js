@@ -64,6 +64,7 @@ const tphController = {
                             "BLOCK_CODE": 1,
                             "NO_TPH": 1,
                             "LAT": 1,
+                            "LONG": 1,
                             "INSERT_USER": 1,
                             "INSERT_TIME": 1
                         }
