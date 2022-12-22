@@ -19,7 +19,7 @@
 		"file-system": "^2.2.2",
 		"geojson-precision": "^1.0.0",
 		"geojson-reducer": "^1.0.3",
-		"jsonwebtoken": "^8.4.0",
+		"jsonwebtoken": "^9.0.0",
 		"jwt-decode": "^2.2.0",
 		"mocha": "^5.2.0",
 		"moment": "^2.22.2",
